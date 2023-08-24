@@ -17,7 +17,7 @@ class TweetsViewModel @Inject constructor(private val repository: TweetsReposito
 
     init {
         viewModelScope.launch {
-            repository.getTweets("motivation")
+            repository.getTweets("Android")
         }
     }
 }

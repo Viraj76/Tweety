@@ -22,7 +22,7 @@ interface TwitsyApi {
    suspend fun getTweets(@Header("X-JSON-Path") categories : String) : Response<List<Tweets>>
 
     @GET("/v3/b/64e637048e4aa6225ed4466b?meta=false")
-    @Headers("X-JSON-Path : tweets.category")
+    @Headers("X-JSON-Path: tweets..category")
     suspend fun getCategory() : Response<List<String>>
 
 }
