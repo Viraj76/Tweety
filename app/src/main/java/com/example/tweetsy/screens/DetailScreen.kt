@@ -15,12 +15,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.tweetsy.viewmodels.TweetsViewModel
 
 @Composable
 fun DetailScreen(){
-    val tweetsViewModel : TweetsViewModel= viewModel()
+    /*
+    When using Navigation Compose, always use the hiltViewModel composable
+     function to obtain an instance of your @HiltViewModel annotated ViewModel.
+     This works with fragments or activities that are annotated with @AndroidEntryPoint.
+     */
+    val tweetsViewModel : TweetsViewModel= hiltViewModel()
     val tweets  = tweetsViewModel.tweets.collectAsState()
     LazyColumn(
         content = {
@@ -30,7 +36,6 @@ fun DetailScreen(){
         }
     )
 }
-
 @Composable
 fun TweeListItem(tweets : String){
     Card(

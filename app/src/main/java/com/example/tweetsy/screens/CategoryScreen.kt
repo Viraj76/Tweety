@@ -26,14 +26,20 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.tweetsy.R
 import com.example.tweetsy.viewmodels.CategoryViewModel
 
 //@Preview
 @Composable
-fun CategoryScreen() {
-    val cateViewModel: CategoryViewModel = viewModel()
+fun CategoryScreen(onClick : (category : String) -> Unit) {
+    /*
+    When using Navigation Compose, always use the hiltViewModel composable
+     function to obtain an instance of your @HiltViewModel annotated ViewModel.
+     This works with fragments or activities that are annotated with @AndroidEntryPoint.
+     */
+    val cateViewModel: CategoryViewModel = hiltViewModel()
     val categories: State<List<String>> =
         cateViewModel.category.collectAsState()  // collecting as state because every time when category changes we want to render the compose
 
@@ -43,7 +49,7 @@ fun CategoryScreen() {
         verticalArrangement = Arrangement.SpaceAround
     ){
         items(categories.value.distinct()){
-            CategoryItem(category = it)
+            CategoryItem(category = it, onClick)
         }
     }
 
@@ -51,12 +57,15 @@ fun CategoryScreen() {
 
 
 @Composable
-fun CategoryItem(category: String) {
+fun CategoryItem(category: String , onClick : (category : String) -> Unit) {
     Box(
         modifier = Modifier
             .padding(4.dp)
             .size(160.dp)
             .clip(RoundedCornerShape(8.dp))
+            .clickable {
+                onClick(category)
+            }
             .paint(
                 painter = painterResource(id = R.drawable.category_view),
                 contentScale = ContentScale.Crop
