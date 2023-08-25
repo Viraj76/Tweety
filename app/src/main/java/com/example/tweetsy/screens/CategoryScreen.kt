@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -43,6 +44,14 @@ fun CategoryScreen(onClick : (category : String) -> Unit) {
     val categories: State<List<String>> =
         cateViewModel.category.collectAsState()  // collecting as state because every time when category changes we want to render the compose
 
+    if(categories.value.isEmpty()){
+        Box(
+            modifier = Modifier.fillMaxSize(1f),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(text = "Loading...", color = Color.Blue)
+        }
+    }
     LazyVerticalGrid(
         columns = GridCells.Fixed(2), 
         contentPadding = PaddingValues(8.dp),
